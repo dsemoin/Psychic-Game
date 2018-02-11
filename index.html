@@ -8,26 +8,29 @@
 
 <body>
 
-  <div id="game">
+  <div id="gameTitle">
     <p>Guess what letter I'm thinking of</p>
-
   </div>
+
   <div id="result">
-    <div id="userGuessesCorrectly">Wins</div>
-    <div id="userGuesesIncorrectly">Losses</div>
-    <div id="guessesLeft">Guesses left</div>
-    <div id="lettersGuessed">Your guesses so far</div>
+    <div id="guessesRight">Wins</div>
+    <div id="guessesWrong">Losses</div>
+    <div id="lettersLeft">Guesses left</div>
+    <div id="lettersUsed">Your guesses so far</div>
   </div>
 
   <script type="text/javascript">
 
     // Creates an array that lists out all the letters that the user gets to choose from.
     var correctLetters = ["a", "b", "r", "d", "h", "o", "q", "p", "z", "s"];
-    var userGuessesCorrectly = 0;
-    var userGuesesIncorrectly = 0;
-    var guessesLeft = 0;
-    var lettersGuessed = 0
-   
+    var userGuessesCorrectly, userGuesesIncorrectly, guessesLeft, lettersGuessed;
+    function resetGame(){
+        userGuessesCorrectly = 0;
+        userGuesesIncorrectly = 0;
+        guessesLeft = 10;
+        lettersGuessed = 0;
+    }
+    resetGame();
 
     // This function is run whenever the user presses a key.
     document.onkeyup = function(event) {
@@ -35,8 +38,16 @@
       // Determines which key was pressed.
       
       var userGuess = event.key;
+      // this records the amount of letters guessed
+      lettersGuessed++; 
+      guessesLeft--;
 
-      // SHOULD I DELETE THIS? Randomly chooses a choice from the options array. This is the Computer's guess.
+    if (lettersGuessed > 10){
+        alert("Game Over!");
+        resetGame();
+
+    } else {
+      // Randomly chooses a choice from the options array. This is the Computer's guess.
       var computerLetterChoice = correctLetters[Math.floor(Math.random() * correctLetters.length)];
     
       if (userGuess === computerLetterChoice)  {
@@ -45,27 +56,23 @@
       } else if (userGuess!== computerLetterChoice) {
         userGuesesIncorrectly++;
       }
-        
-      
+       
       // Alerts the key the user pressed (userGuess).
       alert("User guess: " + userGuess);
 
       // Alerts the Computer's guess.
       alert("Computer guess: " + computerLetterChoice);
      
-      if ( userGuessesCorrectly === computerLetterChoice) {
+      if ( userGuessesCorrectly) {
         
-        userGuessesCorrectly = 0;
-        userGuesesIncorrectly = 0;
-        guessesLeft = 0;
-        lettersGuessed = 0
+        resetGame();
       }
-      document.getElementById("userGuessesCorrectly").innerHTML = "Wins: " + userGuessesCorrectly;
-      document.getElementById("userGuesesIncorrectly").innerHTML = "Losses: " + userGuesesIncorrectly;
-      document.getElementById("guessesLeft").innerHTML = "Guesses left: " + guessesLeft;
-      document.getElementById("lettersGuessed").innerHTML = "Your guesses so far: " + lettersGuessed;
-
-
+      
+    }
+    document.getElementById("guessesRight").innerHTML = "Wins: " + userGuessesCorrectly;
+      document.getElementById("guessesWrong").innerHTML = "Losses: " + userGuesesIncorrectly;
+      document.getElementById("lettersLeft").innerHTML = "Guesses left: " + guessesLeft;
+      document.getElementById("lettersUsed").innerHTML = "Your guesses so far: " + lettersGuessed;
 
           };
 
