@@ -23,11 +23,14 @@
 
     // Creates an array that lists out all the letters that the user gets to choose from.
     var correctLetters = ["a", "b", "r", "d", "h", "o", "q", "p", "z", "s"];
-    var userGuessesCorrectly = 0;
-    var userGuesesIncorrectly = 0;
-    var guessesLeft = 0;
-    var lettersGuessed = 0
-   
+    var userGuessesCorrectly, userGuesesIncorrectly, guessesLeft, lettersGuessed;
+    function resetGame(){
+        userGuessesCorrectly = 0;
+        userGuesesIncorrectly = 0;
+        guessesLeft = 10;
+        lettersGuessed = 0;
+    }
+    resetGame();
 
     // This function is run whenever the user presses a key.
     document.onkeyup = function(event) {
@@ -36,13 +39,12 @@
       
       var userGuess = event.key;
       // this records the amount of letters guessed
-      lettersGuessed++
+      lettersGuessed++; 
+      guessesLeft--;
+
     if (lettersGuessed > 10){
         alert("Game Over!");
-        userGuessesCorrectly = 0;
-        userGuesesIncorrectly = 0;
-        guessesLeft = 0;
-        lettersGuessed = 0;
+        resetGame();
 
     } else {
       // Randomly chooses a choice from the options array. This is the Computer's guess.
@@ -63,10 +65,7 @@
      
       if ( userGuessesCorrectly) {
         
-        userGuessesCorrectly = 0;
-        userGuesesIncorrectly = 0;
-        guessesLeft = 0;
-        lettersGuessed = 0
+        resetGame();
       }
       
     }
